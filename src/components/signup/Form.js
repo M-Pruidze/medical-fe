@@ -9,7 +9,7 @@ import {
     Paragraph
 } from './styles';
 import axios from 'axios';
-import { Redirect, Link, Switch, Route, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 require('dotenv').config();
 
 const FormComponent = () => {
@@ -25,11 +25,10 @@ const FormComponent = () => {
     const inputPswrp = useRef(null);
     const btnSubmit = useRef(null);
 
-    const URL = process.env.REACT_APP_URL;
+    const URL = process.env.REACT_APP_URL_AUTH;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`user`, user);
         setUser({userName: '', pswValue: '', pswrpValue: ''});
         await createUser();
     }
@@ -69,14 +68,12 @@ const FormComponent = () => {
         if(e.code === 'Enter'){
             e.preventDefault();
             inputPsw.current.focus();
-            console.log('enter press here! ')
         }
     }
     const handleKeyPressPsw = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
             inputPswrp.current.focus();
-            console.log('enter press here! ')
         }
     }
     const handleKeyPressPswrp = (e) => {
