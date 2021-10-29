@@ -56,7 +56,7 @@ header button {
     font-weight: 300;
     margin-left: 1rem;
 }
-main {
+.container main {
     padding: 2rem 0 5rem;
     width: 100%;
     display: flex;
