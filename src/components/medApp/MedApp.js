@@ -60,7 +60,7 @@ const MedApp = () => {
     }, []);
 
     return (
-        <div className = 'container' >
+        <div className='container'>
             <header>
                 <div className='imgContainer'>
                     <img src={logo1} alt='logo' />
@@ -69,7 +69,7 @@ const MedApp = () => {
                 <Logout />
             </header>
             <CreateVisit  setVisitsList={setVisitsList} visitsList={visitsList} />
-            <List visitsList={visitsList} />
+            <List visitsList={visitsList} setVisitsList={setVisitsList} />
         </div>
     )
 }
