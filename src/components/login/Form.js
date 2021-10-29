@@ -12,6 +12,8 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 require('dotenv').config();
 
+const jwt = JSON.parse(localStorage.getItem('token'));
+
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: ''});
     const {userName, pswValue} = user;
@@ -24,9 +26,12 @@ const FormComponent = () => {
 
     const URL = process.env.REACT_APP_URL_LOGIN;
 
+    useEffect(() => {
+        jwt && history.push('/visit');
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`user`, user);
         setUser({userName: '', pswValue: ''});
         await loginUser();
     }
@@ -45,8 +50,9 @@ const FormComponent = () => {
             localStorage.setItem('token',JSON.stringify(token));
             localStorage.setItem('userId',JSON.stringify(userId));
             localStorage.setItem('username',JSON.stringify(username));
-            history.push(`/visit`);
 
+            console.log('pressing login button');
+            history.push('/visit');
         } catch (error) {
             if (error.response) {
                 // Request made and server responded

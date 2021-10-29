@@ -72,6 +72,7 @@ export const H1 = styled.h1`
 `
 export const H2 = styled.h1`
     ${font};
+    padding: 1.5rem 0;
 
     @media only screen and (max-width: 860px) {
         text-align: center;
