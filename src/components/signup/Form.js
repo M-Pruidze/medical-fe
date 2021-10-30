@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 require('dotenv').config();
 
-const jwt = JSON.parse(localStorage.getItem('token'));
+// const jwt = JSON.parse(localStorage.getItem('token'));
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: '', pswrpValue: ''});
@@ -29,9 +29,10 @@ const FormComponent = () => {
 
     const URL = process.env.REACT_APP_URL_AUTH;
 
-    useEffect(() => {
-        jwt && history.push('/visit');
-    }, []);
+    useEffect(()=>{
+        const jwt = JSON.parse(localStorage.getItem('token'));
+        jwt && history.push('/visit')
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -2,9 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const userId = JSON.parse(localStorage.getItem('userId'));
-const jwt = JSON.parse(localStorage.getItem('token'));
+// const jwt = JSON.parse(localStorage.getItem('token'));
 
 const Visit = ({setVisitsList, visitsList}) => {
+    const jwt = JSON.parse(localStorage.getItem('token'));
     const [doctors, setDoctors] = useState([]);
     const [visit, setVisit] = useState({patientName: '', doctor:'', date: '', time: '', complaint: ''});
     const { patientName, doctor, date, time, complaint } = visit;
@@ -22,7 +23,6 @@ const Visit = ({setVisitsList, visitsList}) => {
     // add a visit
     const addVisit = async () => {
         try {
-            // if (patientName.trim() && doctor && date && time && complaint.trim()) {
                 const URL = `${process.env.REACT_APP_URL}visit`;
                 const response = await axios.post(URL, {
                         username: patientName,
@@ -37,20 +37,14 @@ const Visit = ({setVisitsList, visitsList}) => {
                 }
                 );
                 setVisitsList([...visitsList, response.data]);
-
-                console.log(`response-add`, response)
-            // }
         } catch (error) {
             console.log(`error-add visit>>`, error.response)
         }
     }
     const handleSubmitVisit = async (e) => {
-        console.log('g');
         e.preventDefault();
         await addVisit();
         setVisit({patientName: '', doctor:'', date: '', time: '', complaint: ''});
-
-    console.log(`doctor>>`, doctor)
     }
     // get doctors
     const getDoctors = async () => {
@@ -63,7 +57,6 @@ const Visit = ({setVisitsList, visitsList}) => {
             });
 
             setDoctors([...data.data]);
-            console.log(`data.data`, data.data)
             console.log(`doctors`, doctors)
         } catch (error) {
             console.log(`error.response`, error.response)
@@ -71,7 +64,6 @@ const Visit = ({setVisitsList, visitsList}) => {
     }
     useEffect( async () => {
         await getDoctors();
-        console.log(`doctors`, doctors)
     }, [])
 
     // pressing the Enter key

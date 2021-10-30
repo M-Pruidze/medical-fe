@@ -14,6 +14,9 @@ button:hover {
     cursor:pointer;
 }
 .container {
+    position:absolute;
+    top: 0;
+
     width: 95vw;
     max-width: 989px;
     background: #C5E9FF;
@@ -63,7 +66,7 @@ header button {
     justify-content: space-evenly;
 }
 
-/* input container form styles*/
+/* input container - form styles*/
 
 .inputsContainer {
     width: 100%;
@@ -104,7 +107,7 @@ header button {
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    margin:1rem 0;
+    margin:1rem 0 ;
     align-self: flex-end;
 }
 
@@ -112,9 +115,8 @@ header button {
 main.list {
     display: flex;
     flex-direction: column;
-    /* margin: 1rem; */
-    width: 100%;
-    position:absolute;
+    margin: 1rem;
+    width: 95%;
 }
 .singleVisit {
     display: flex;
@@ -145,22 +147,18 @@ main.list {
 }
 /* delete window */
 .deleteWindow, .editWindow {
-    position: relative;
+    position: absolute;
     top: 0;
+    left: 0;
     height: 100%;
-    width: 95vw;
-    max-width: 989px;
-    margin: 5vh auto;
-    background: rgba(196, 196, 196, 0.9);
+    width: 100%;
+    background: rgba(196, 196, 196, 0.5);
 }
 .delete-content {
-    /* position: absolute; */
+    position: relative;
     max-width: 642px;
     max-height: 327px;
     margin: 143px auto 143px;
-    /* left: 196px; */
-    /* top: 143px; */
-
     background: #FFFFFF;
     border-radius: 4px;
     font-size: 24px;
@@ -184,10 +182,6 @@ main.list {
     .headerOne {
         text-align: center;
         font-size: 30px;
-    }
-    .container main {
-        flex-direction: column;
-        align-items: center;
     }
     .singleField {
         width: 100%;

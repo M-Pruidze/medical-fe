@@ -13,27 +13,10 @@ let jwt;
 
 const MedApp = () => {
     const history = useHistory();
-    // const checkUser = async () => {
-    //     try {
-    //         const URL = `${process.env.REACT_APP_URL}user/${userId}/profile`;
-    //         const resp = await axios.get(URL,{
-    //             headers:{
-    //                 Authorization: `Bearer ${jwt}`
-    //             }
-    //         }
-    //         );
-    //         console.log(`resp medapp`, resp)
-    //     } catch (error) {
-    //         if (error.response.status == '401') history.push('/login');
-    //     }
-    // };
     useEffect(() => {
-        // await checkUser();
         jwt = JSON.parse(localStorage.getItem('token'));
         !jwt && history.push('/login');
     }, []);
-
-
 
     const [visitsList, setVisitsList] = useState([]);
 
@@ -43,8 +26,6 @@ const MedApp = () => {
             const jwt = JSON.parse(localStorage.getItem('token'));
 
             const URL = `${process.env.REACT_APP_URL}visit`;
-            console.log(`URL`, URL)
-            console.log(`jwt`, jwt)
             const response = await axios.get(URL, {
                 headers: {
                     Authorization: `Bearer ${jwt}`
