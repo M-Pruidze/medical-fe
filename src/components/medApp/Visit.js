@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 
 const userId = JSON.parse(localStorage.getItem('userId'));
-// const jwt = JSON.parse(localStorage.getItem('token'));
 
-const Visit = ({setVisitsList, visitsList}) => {
+const Visit = ({doctors, setVisitsList, visitsList}) => {
     const jwt = JSON.parse(localStorage.getItem('token'));
-    const [doctors, setDoctors] = useState([]);
     const [visit, setVisit] = useState({patientName: '', doctor:'', date: '', time: '', complaint: ''});
     const { patientName, doctor, date, time, complaint } = visit;
 
@@ -46,25 +44,6 @@ const Visit = ({setVisitsList, visitsList}) => {
         await addVisit();
         setVisit({patientName: '', doctor:'', date: '', time: '', complaint: ''});
     }
-    // get doctors
-    const getDoctors = async () => {
-        try {
-            const URL = `${process.env.REACT_APP_URL}doctor`;
-            const data = await axios.get(URL, {
-                headers:{
-                    Authorization: `Bearer ${jwt}`
-                }
-            });
-
-            setDoctors([...data.data]);
-            console.log(`doctors`, doctors)
-        } catch (error) {
-            console.log(`error.response`, error.response)
-        }
-    }
-    useEffect( async () => {
-        await getDoctors();
-    }, [])
 
     // pressing the Enter key
     const handleKeyPressPatientName = (e) => {

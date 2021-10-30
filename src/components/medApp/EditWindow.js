@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import axios from 'axios';
 
-const EditWindow = ({editVisit, setEditVisit, editing, setEditing, visitsList, setVisitsList}) => {
-    const [doctors, setDoctors] = useState([]);
-    const {usernameInput, doctorInput, dateInput, timeInput, complaintInput, id} = editVisit;
+const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visitsList, setVisitsList}) => {
+    const {usernameInput, doctorInput, dateInput, timeInput, complaintInput, _id} = editVisit;
 
+    // remove refs and their usage
     const inputDoctor = useRef(null);
     const inputDate = useRef(null);
     const inputTime = useRef(null);
@@ -14,47 +14,34 @@ const EditWindow = ({editVisit, setEditVisit, editing, setEditing, visitsList, s
 
     const jwt = JSON.parse(localStorage.getItem('token'));
 
-    // getting all doctors
-    useEffect( async () => {
-        await getDoctors();
-        console.log(`doctors`, doctors)
-    }, [])
-
     // edit a visit
     const editingVisit = async () => {
         try {
-                const URL = `${process.env.REACT_APP_URL}visit/${id}`;
-                const response = await axios.put(URL, {
-                        username: usernameInput,
-                        doctorId: doctorInput,
-                        date: `${dateInput}T${timeInput}Z`,
-                        complaints: complaintInput,
-                    }, {
-                        headers: {
-                            Authorization: `Bearer ${jwt}`,
-                        },
+            const URL = `${process.env.REACT_APP_URL}visit/${_id}`;
+            const response = await axios.put(URL, {
+                    username: usernameInput,
+                    doctorId: doctorInput,
+                    date: `${dateInput}T${timeInput}Z`,
+                    complaints: complaintInput,
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${jwt}`,
+                    },
                 }
-                );
-                console.log(`response-edit`, response)
+            );
+            const newArr = visitsList.map(item => {
+                    console.log(`item`, item)
+                    console.log(`editVisit`, editVisit)
+                if (item._id === editVisit._id) {
+                    console.log('shevida');
+                    return {...item, ...response.data}
+                } else return item;
+            })
+            setVisitsList(newArr);
+            console.log(newArr)
+            console.log(`response-edit`, response)
         } catch (error) {
             console.log(`error-edit visit>>`, error.response)
-        }
-    }
-
-    // get doctors
-    const getDoctors = async () => {
-        try {
-            const URL = `${process.env.REACT_APP_URL}doctor`;
-            const data = await axios.get(URL, {
-                headers:{
-                    Authorization: `Bearer ${jwt}`
-                }
-            });
-
-            setDoctors([...data.data]);
-            console.log(`data.data`, data.data);
-        } catch (error) {
-            console.log(`error.response`, error.response)
         }
     }
 
@@ -98,13 +85,12 @@ const EditWindow = ({editVisit, setEditVisit, editing, setEditing, visitsList, s
 
     const handleClickEdit = async () => {
         console.log('in edit window button edit');
-        // await getDoctors();
         await editingVisit();
         setEditVisit({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', id:'',});
         setEditing(!editing);
     }
 
-    // have to add here getting all doctors, change doctors' input on doctors' select, get all visits, and add onkeypress "Enter"
+    //  get all visits, and add onkeypress "Enter"
 
     const handleChange = (e) => {
         setEditVisit({...editVisit, [e.target.name]: e.target.value})
@@ -125,7 +111,7 @@ const EditWindow = ({editVisit, setEditVisit, editing, setEditing, visitsList, s
                     onKeyPress={handleKeyPressPatientName}
                 />
                 <select
-                    value=''
+                    value={doctorInput}
                     onKeyPress={handleKeyPressDoctor}
                     name='doctorInput'
                     ref={inputDoctor}

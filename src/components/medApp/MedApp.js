@@ -12,13 +12,32 @@ const userId = JSON.parse(localStorage.getItem('userId'));
 let jwt;
 
 const MedApp = () => {
+    const [doctors, setDoctors] = useState([]);
+    const [visitsList, setVisitsList] = useState([]);
     const history = useHistory();
-    useEffect(() => {
+
+    useEffect(async () => {
         jwt = JSON.parse(localStorage.getItem('token'));
         !jwt && history.push('/login');
+        await getDoctors();
     }, []);
 
-    const [visitsList, setVisitsList] = useState([]);
+    // get doctors
+    const getDoctors = async () => {
+        try {
+            const URL = `${process.env.REACT_APP_URL}doctor`;
+            const data = await axios.get(URL, {
+                headers:{
+                    Authorization: `Bearer ${jwt}`
+                }
+            });
+
+            setDoctors([...data.data]);
+            console.log(`doctors`, doctors)
+        } catch (error) {
+            console.log(`error.response`, error.response)
+        }
+    }
 
     // get visits
     const getVisits = async () => {
@@ -49,8 +68,8 @@ const MedApp = () => {
                 <h1 className='headerOne'>Приемы</h1>
                 <Logout />
             </header>
-            <CreateVisit  setVisitsList={setVisitsList} visitsList={visitsList} />
-            <List visitsList={visitsList} setVisitsList={setVisitsList} />
+            <CreateVisit doctors={doctors}  setVisitsList={setVisitsList} visitsList={visitsList} />
+            <List doctors={doctors} visitsList={visitsList} setVisitsList={setVisitsList} />
         </div>
     )
 }
