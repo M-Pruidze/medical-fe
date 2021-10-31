@@ -102,52 +102,72 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                 edit прием
                 </div>
                 <div className='main'>
-                <input
-                    type='text'
-                    value={usernameInput}
-                    name='usernameInput'
-                    ref={inputName}
-                    onChange={handleChange}
-                    onKeyPress={handleKeyPressPatientName}
-                />
-                <select
-                    value={doctorInput}
-                    onKeyPress={handleKeyPressDoctor}
-                    name='doctorInput'
-                    ref={inputDoctor}
-                    onChange={handleChange}
-                >
-                    <option value=''></option>
-                    {doctors.map((doctor, index) => {
-                        const { doctorName, _id, specialty} = doctor;
-                        return <option value={`${doctorName} - ${specialty}`} key={_id}>{doctorName} - {specialty}</option>
-                        }
-                    )}
-                </select>
-                <input
-                    type='date'
-                    value={dateInput}
-                    onKeyPress={handleKeyPressDate}
-                    name='dateInput'
-                    ref={inputDate}
-                    onChange={handleChange}
-                    />
-                <input
-                    type='time'
-                    value={timeInput}
-                    onKeyPress={handleKeyPressTime}
-                    name='timeInput'
-                    ref={inputTime}
-                    onChange={handleChange}
-                    />
-                <input
-                    type='text'
-                    value={complaintInput}
-                    onKeyPress={handleKeyPressComplaint}
-                    name='complaintInput'
-                    ref={inputComplaint}
-                    onChange={handleChange}
-                    />
+                    <div className='singleField'>
+                        <label htmlFor='usernameInput'>Имя:</label>
+                        <input
+                            type='text'
+                            id='usernameInput'
+                            value={usernameInput}
+                            name='usernameInput'
+                            ref={inputName}
+                            onChange={handleChange}
+                            onKeyPress={handleKeyPressPatientName}
+                        />
+                    </div>
+                    <div className='singleField'>
+                        <label htmlFor='doctorInput'>Врач:</label>
+                        <select
+                            value={doctorInput}
+                            id='doctorInput'
+                            onKeyPress={handleKeyPressDoctor}
+                            name='doctorInput'
+                            ref={inputDoctor}
+                            onChange={handleChange}
+                        >
+                            <option value=''></option>
+                            {doctors.map((doctor, index) => {
+                                const { doctorName, _id, specialty} = doctor;
+                                return <option value={`${doctorName} - ${specialty}`} key={_id}>{doctorName} - {specialty}</option>
+                                }
+                            )}
+                        </select>
+                    </div>
+                    <div className='singleField'>
+                        <label htmlFor='dateInput'>Дата:</label>
+                        <input
+                            type='date'
+                            id='dateInput'
+                            value={dateInput}
+                            onKeyPress={handleKeyPressDate}
+                            name='dateInput'
+                            ref={inputDate}
+                            onChange={handleChange}
+                            />
+                    </div>
+                    <div className='singleField'>
+                        <label htmlFor='timeInput'>время:</label>
+                        <input
+                            type='time'
+                            id='timeInput'
+                            value={timeInput}
+                            onKeyPress={handleKeyPressTime}
+                            name='timeInput'
+                            ref={inputTime}
+                            onChange={handleChange}
+                            />
+                    </div>
+                    <div className='singleField'>
+                        <label htmlFor='complaintInput'>Жалобы:</label>
+                        <input
+                            type='text'
+                            id='complaintInput'
+                            value={complaintInput}
+                            onKeyPress={handleKeyPressComplaint}
+                            name='complaintInput'
+                            ref={inputComplaint}
+                            onChange={handleChange}
+                            />
+                    </div>
                 </div>
                 <div className='header btns'>
                     <button type='button' onClick={() => setEditing(!editing)}>cancel</button>
