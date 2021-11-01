@@ -105,7 +105,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                     </div>
                     <div className='singleField'>
                         <label htmlFor='complaintInput'>Жалобы:</label>
-                        <input
+                        <textarea
                             type='text'
                             id='complaintInput'
                             value={complaintInput}

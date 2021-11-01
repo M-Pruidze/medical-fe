@@ -1,9 +1,8 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 
-const userId = JSON.parse(localStorage.getItem('userId'));
-
 const Visit = ({doctors, setVisitsList, visitsList}) => {
+    const userId = JSON.parse(localStorage.getItem('userId'));
     const jwt = JSON.parse(localStorage.getItem('token'));
     const [visit, setVisit] = useState({patientName: '', doctor:'', date: '', time: '', complaint: ''});
     const { patientName, doctor, date, time, complaint } = visit;

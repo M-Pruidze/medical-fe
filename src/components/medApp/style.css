@@ -89,7 +89,7 @@ header button {
 .singleField label {
     margin: .5rem 0;
 }
-.singleField input, .singleField select {
+.singleField input, .singleField select, .singleField textarea {
     height: 45px;
     background: #FFFFFF;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -167,7 +167,7 @@ main.list {
     background: rgba(196, 196, 196, 0.9);
 }
 .editWindow  {
-    min-height: 780px;
+    min-height: 830px;
 }
 .delete-content, .edit-content {
     position: relative;
@@ -229,24 +229,24 @@ main.list {
 .edit-content .main .singleField{
     max-width: 572px;
     width: 100%;
-    /* text-transform: none; */
 }
-.edit-content .main .singleField input, .edit-content .main .singleField label, .edit-content .main .singleField select {
+.edit-content .main .singleField input, .edit-content .main .singleField label, .edit-content .main .singleField select, .edit-content .main .singleField textarea {
     text-transform: none;
     font-size: 18px;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     padding-left: 20px;
 }
-.edit-content .main .singleField input:first-child, .edit-content .main .singleField select {
+.edit-content .main .singleField:first-child input, .edit-content .main .singleField select {
     text-transform: capitalize;
 }
 .edit-content .main .singleField label {
     padding-left: 0;
 }
-/* .edit-content .main .singleField input:last-child {
+.edit-content .main .singleField:last-child textarea {
     height: 105px;
-} */
+    padding-top: .5rem;
+}
 .edit-content .main {
     padding: .5rem 30px 3rem 40px;
 }
