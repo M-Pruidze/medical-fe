@@ -21,13 +21,14 @@ const List = ({doctors, visitsList, setVisitsList}) => {
             timeInput: specificVisit.date.slice(11,16),
             complaintInput: specificVisit.complaints,
             _id: index,
-        })
+        });
     }
     const handleClickDelete = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
         setDeleting(!deleting);
         setDeleteVisit(specificVisit);
     }
+
     return <main className='list'>
         {visitsList.length !== 0 &&
             <div className='listTitles'>

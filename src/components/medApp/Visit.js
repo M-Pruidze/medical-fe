@@ -10,7 +10,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     const btnSubmit = useRef(null);
 
     const handleChange = (e) => {
-        setVisit({...visit, [e.target.name] : e.target.value})
+        setVisit({...visit, [e.target.name] : e.target.value});
     }
 
     // add a visit
@@ -31,7 +31,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                 );
                 setVisitsList([...visitsList, response.data]);
         } catch (error) {
-            console.log(`error-add visit>>`, error.response)
+            console.log(`error-add visit>>`, error.response);
         }
     }
     const handleSubmitVisit = async (e) => {
@@ -48,9 +48,19 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
         }
     }
 
+    // date variables
+    const dob = new Date();
+    const month = dob.getMonth();
+    const day   = dob.getDay() <= 9 ? `0${dob.getDay()}` : dob.getDay();
+    const year  = dob.getFullYear();
+    const today = `${year}-${month+1}-${day}`;
+    const hours = dob.getHours() <= 9 ? `0${dob.getHours()}` : dob.getHours();
+    const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
+    const currentTime = `${hours}:${minutes}`;
+
     // checking if all fields are filled
     const validate = () => {
-        return patientName.trim() && doctor && date && time && complaint.trim()
+        return patientName.trim() && doctor && date && date.slice(0,4) >= year && time && time >= currentTime && complaint.trim();
     }
 
     return (
@@ -88,6 +98,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={date}
                         id='date'
                         name='date'
+                        min={today}
                         onChange={handleChange}
                     />
                 </div>
@@ -98,6 +109,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={time}
                         id='time'
                         name='time'
+                        min={currentTime}
                         onChange={handleChange}
                     />
                 </div>

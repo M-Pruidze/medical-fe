@@ -25,11 +25,11 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
             );
             setVisitsList(visitsList.map(item => {
                 if (item._id === editVisit._id) {
-                    return {...item, ...response.data}
+                    return {...item, ...response.data};
                 } else return item;
             }))
         } catch (error) {
-            console.log(`error-edit visit>>`, error.response)
+            console.log(`error-edit visit>>`, error.response);
         }
     }
 
@@ -48,8 +48,26 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
     }
 
     const handleChange = (e) => {
-        setEditVisit({...editVisit, [e.target.name]: e.target.value})
+        setEditVisit({...editVisit, [e.target.name]: e.target.value});
     }
+
+    // date variables
+    const dob = new Date();
+    const month = dob.getMonth();
+    const day   = dob.getDay() <= 9 ? `0${dob.getDay()}` : dob.getDay();
+    const year  = dob.getFullYear();
+    const today = `${year}-${month+1}-${day}`;
+    const hours = dob.getHours() <= 9 ? `0${dob.getHours()}` : dob.getHours();
+    const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
+    const time = `${hours}:${minutes}`;
+    console.log(`today`, today)
+    console.log(`time`, time)
+
+    // checking if all fields are filled
+    const validate = () => {
+        return usernameInput.trim() && doctorInput && dateInput && dateInput.slice(0,4) >= year && timeInput && timeInput >= time && complaintInput.trim();
+    }
+
     return (
         <div className='editWindow'>
             <div className='edit-content'>
@@ -90,6 +108,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             id='dateInput'
                             value={dateInput}
                             name='dateInput'
+                            min={today}
                             onChange={handleChange}
                             />
                     </div>
@@ -100,7 +119,9 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             id='timeInput'
                             value={timeInput}
                             name='timeInput'
+                            min={time}
                             onChange={handleChange}
+
                             />
                     </div>
                     <div className='singleField'>
@@ -120,6 +141,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                     <button
                         type='button'
                         ref={btnSubmit}
+                        disabled={!validate()}
                         onClick={handleClickEdit}
                     >save</button>
                 </div>
