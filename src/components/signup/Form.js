@@ -31,8 +31,8 @@ const FormComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser({userName: '', pswValue: '', pswrpValue: ''});
         await createUser();
+        setUser({userName: '', pswValue: '', pswrpValue: ''});
     }
     const createUser = async () => {
         try {
