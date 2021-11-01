@@ -54,13 +54,14 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     const day   = dob.getDay() <= 9 ? `0${dob.getDay()}` : dob.getDay();
     const year  = dob.getFullYear();
     const today = `${year}-${month+1}-${day}`;
+    const nextYear = `${year + 1}-${month+1}-${day}`;
     const hours = dob.getHours() <= 9 ? `0${dob.getHours()}` : dob.getHours();
     const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
     const currentTime = `${hours}:${minutes}`;
 
-    // checking if all fields are filled
+    // checking if all fields are valid
     const validate = () => {
-        return patientName.trim() && doctor && date && date.slice(0,4) >= year && time && time >= currentTime && complaint.trim();
+        return patientName.trim() && doctor && date && date.slice(0,4) >= year && date.slice(5,7) >= month+1 && date.slice(8,10) >= day && date.slice(0,4) <= year+1 && time && time >= currentTime && complaint.trim();
     }
 
     return (
@@ -99,6 +100,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         id='date'
                         name='date'
                         min={today}
+                        max={nextYear}
                         onChange={handleChange}
                     />
                 </div>

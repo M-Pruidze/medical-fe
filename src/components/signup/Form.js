@@ -10,6 +10,8 @@ import {
 } from './styles';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+// import config from '../../../config';
+// const url_auth = require('config');
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: '', pswrpValue: ''});
@@ -23,6 +25,7 @@ const FormComponent = () => {
     const btnSubmit = useRef(null);
 
     const URL = process.env.REACT_APP_URL_AUTH;
+    // const URL = url_auth;
 
     useEffect(()=>{
         const jwt = JSON.parse(localStorage.getItem('token'));
@@ -36,6 +39,7 @@ const FormComponent = () => {
     }
     const createUser = async () => {
         try {
+            console.log(`URL`, URL)
             const resp = await axios.post(URL, {
                 username: userName,
                 password: pswValue

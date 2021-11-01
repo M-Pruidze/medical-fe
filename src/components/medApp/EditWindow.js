@@ -57,15 +57,14 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
     const day   = dob.getDay() <= 9 ? `0${dob.getDay()}` : dob.getDay();
     const year  = dob.getFullYear();
     const today = `${year}-${month+1}-${day}`;
+    const nextYear = `${year + 1}-${month+1}-${day}`;
     const hours = dob.getHours() <= 9 ? `0${dob.getHours()}` : dob.getHours();
     const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
     const time = `${hours}:${minutes}`;
-    console.log(`today`, today)
-    console.log(`time`, time)
 
     // checking if all fields are filled
     const validate = () => {
-        return usernameInput.trim() && doctorInput && dateInput && Number(dateInput.slice(0,4)) >= Number(year) && timeInput && time && complaintInput.trim();
+        return usernameInput.trim() && doctorInput && dateInput && Number(dateInput.slice(0,4)) >= Number(year) && dateInput.slice(5,7) >= month+1 && dateInput.slice(8,10) >= day && Number(dateInput.slice(0,4)) <= Number(year+1) && timeInput && complaintInput.trim();
     }
 
     return (
@@ -109,6 +108,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             value={dateInput}
                             name='dateInput'
                             min={today}
+                            max={nextYear}
                             onChange={handleChange}
                             />
                     </div>

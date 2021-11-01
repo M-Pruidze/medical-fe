@@ -11,6 +11,10 @@ const List = ({doctors, visitsList, setVisitsList}) => {
     const [editVisit, setEditVisit] = useState({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', _id:'',});
     const [deleteVisit, setDeleteVisit] = useState({});
 
+    const [sort, setSort] = useState({});
+    const [isSorting, setIsSorting] = useState(false);
+    const [sortField, setSortField] = useState('');
+
     const handleClickEdit = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
         setEditing(!editing);
@@ -22,14 +26,54 @@ const List = ({doctors, visitsList, setVisitsList}) => {
             complaintInput: specificVisit.complaints,
             _id: index,
         });
-    }
+    };
     const handleClickDelete = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
         setDeleting(!deleting);
         setDeleteVisit(specificVisit);
+    };
+    const handleChangeSortField = (e) => {
+        setSortField(e.target.value);
+        if (sortField) setIsSorting(true);
     }
+    console.log(`sortField`, sortField);
 
     return <main className='list'>
+        {visitsList.length !== 0 &&
+            <div className='sortFieldsContainer'>
+                    <div className='sortField'>
+                            <label htmlFor='sort'>Сортировать по:</label>
+                            <select
+                                value={sortField}
+                                id='sort'
+                                name='sort'
+                                onChange={handleChangeSortField}
+                            >
+                                <option value=''></option>
+                                <option value='nameOption'>Имя</option>
+                                <option value='doctorOption'>Врач</option>
+                                <option value='dateOption'>Дата</option>
+                                <option value='noOption'>None</option>
+                            </select>
+                </div>
+                {isSorting &&
+                    <div className='sortField'>
+                                <label htmlFor='sort'>Направление:</label>
+                                <select
+                                    value={sortField}
+                                    id='sort'
+                                    name='sort'
+                                    // onChange={handleChangeSortField}
+                                >
+                                    <option value=''></option>
+                                    <option value='ascending'>По возрастанию</option>
+                                    <option value='descending'>По убыванию</option>
+                                </select>
+                    </div>
+                }
+            </div>
+        }
+
         {visitsList.length !== 0 &&
             <div className='listTitles'>
                 <p>Имя</p>

@@ -253,6 +253,30 @@ main.list {
 .edit-content .main .singleField {
     margin: .25rem 0;
 }
+/* sort fields */
+.sortFieldsContainer {
+    width: 100%;
+    /* background: red; */
+    display: flex;
+    justify-content: end;
+    margin: 0 0 2.5rem;
+}
+.sortFieldsContainer .sortField {
+    display: flex;
+    align-items: center;
+    /* max-width: 188px; */
+    /* width: 15%; */
+    /* margin: 1rem 0; */
+}
+.sortFieldsContainer .sortField select, .sortFieldsContainer .sortField option {
+    width: 200px;
+    height: 47px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.sortFieldsContainer .sortField label {
+    padding: 1rem;
+}
 @media only screen and (max-width: 860px) {
     .container {
         height: auto;
