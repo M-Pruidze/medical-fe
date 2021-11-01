@@ -8,10 +8,6 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     const [visit, setVisit] = useState({patientName: '', doctor:'', date: '', time: '', complaint: ''});
     const { patientName, doctor, date, time, complaint } = visit;
 
-    const inputDoctor = useRef(null);
-    const inputDate = useRef(null);
-    const inputTime = useRef(null);
-    const inputComplaint = useRef(null);
     const btnSubmit = useRef(null);
 
     const handleChange = (e) => {
@@ -46,30 +42,6 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     }
 
     // pressing the Enter key
-    const handleKeyPressPatientName = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputDoctor.current.focus();
-        }
-    }
-    const handleKeyPressDoctor = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputDate.current.focus();
-        }
-    }
-    const handleKeyPressDate = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputTime.current.focus();
-        }
-    }
-    const handleKeyPressTime = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputComplaint.current.focus();
-        }
-    }
     const handleKeyPressComplaint = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
@@ -92,7 +64,6 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={patientName}
                         name='patientName'
                         onChange={handleChange}
-                        onKeyPress={handleKeyPressPatientName}
                     />
                 </div>
                 <div className='singleField'>
@@ -101,9 +72,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={doctor}
                         id='doctor'
                         name='doctor'
-                        ref={inputDoctor}
                         onChange={handleChange}
-                        onKeyPress={handleKeyPressDoctor}
                     >
                         <option value=''></option>
                         {doctors.map((doctor, index) => {
@@ -120,9 +89,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={date}
                         id='date'
                         name='date'
-                        ref={inputDate}
                         onChange={handleChange}
-                        onKeyPress={handleKeyPressDate}
                     />
                 </div>
                 <div className='singleField'>
@@ -132,9 +99,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={time}
                         id='time'
                         name='time'
-                        ref={inputTime}
                         onChange={handleChange}
-                        onKeyPress={handleKeyPressTime}
                     />
                 </div>
                 <div className='singleField'>
@@ -144,7 +109,6 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={complaint}
                         id='complaint'
                         name='complaint'
-                        ref={inputComplaint}
                         onChange={handleChange}
                         onKeyPress={handleKeyPressComplaint}
                     />

@@ -8,8 +8,6 @@ import {
     Main,
     ImgContainerTwo,
 } from './styles';
-import logo1 from '../../images/logo1.png';
-import logo2 from '../../images/logo2.png';
 import FormComponent from './Form';
 
 const Signup = () => {
@@ -17,13 +15,13 @@ const Signup = () => {
         <Container >
             <Header>
                 <ImgContainerOne>
-                    <Image src={logo1} alt='logo' />
+                    <Image src={process.env.PUBLIC_URL + '/images/logo1.png'} alt='logo' />
                 </ImgContainerOne>
                 <H1>Зарегистрироваться в системе</H1>
             </Header>
             <Main>
                 <ImgContainerTwo>
-                    <Image src={logo2} alt='logo' />
+                    <Image src={process.env.PUBLIC_URL + '/images/logo2.png'} alt='logo' />
                 </ImgContainerTwo>
                 <FormComponent />
             </Main>

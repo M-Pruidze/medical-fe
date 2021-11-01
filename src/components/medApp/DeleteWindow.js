@@ -1,12 +1,11 @@
 import axios from 'axios';
 import React from 'react'
 
-const DeleteWindow = ({deleting, setDeleting, visitId, visitsList, setVisitsList}) => {
-    console.log(`visitId`, visitId)
+const DeleteWindow = ({deleteVisit, deleting, setDeleting, visitsList, setVisitsList}) => {
+    const {_id} = deleteVisit;
     const handleClickDelete = async (index) => {
         const jwt = JSON.parse(localStorage.getItem('token'));
         const URL = `${process.env.REACT_APP_URL}visit/${index}`;
-        console.log(`URL`, URL)
         await axios.delete(URL,{
             headers: {Authorization: `Bearer ${jwt}`},
         });
@@ -23,9 +22,9 @@ const DeleteWindow = ({deleting, setDeleting, visitId, visitsList, setVisitsList
                 <div className='main'>
                 Вы действительно хотите удалить прием?
                 </div>
-                <div className='header btns'>
+                <div className='buttons'>
                     <button type='button' onClick={() => setDeleting(!deleting)}>cancel</button>
-                    <button type='button' onClick={() => handleClickDelete(visitId)}>delete</button>
+                    <button type='button' onClick={() => handleClickDelete(_id)}>delete</button>
                 </div>
             </div>
         </div>

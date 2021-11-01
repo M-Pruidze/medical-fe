@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import logo1 from '../../images/logo1.png';
 import './style.css';
 import CreateVisit from './Visit';
 import List from './List';
 import Logout from './Logout';
-require('dotenv').config();
 
 const userId = JSON.parse(localStorage.getItem('userId'));
 let jwt;
@@ -20,6 +18,7 @@ const MedApp = () => {
         jwt = JSON.parse(localStorage.getItem('token'));
         !jwt && history.push('/login');
         await getDoctors();
+        await getVisits();
     }, []);
 
     // get doctors
@@ -33,7 +32,6 @@ const MedApp = () => {
             });
 
             setDoctors([...data.data]);
-            console.log(`doctors`, doctors)
         } catch (error) {
             console.log(`error.response`, error.response)
         }
@@ -55,15 +53,12 @@ const MedApp = () => {
             console.log(`error.response`, error.response)
         }
     }
-    useEffect( async () => {
-        await getVisits();
-    }, []);
 
     return (
         <div className='container'>
             <header>
                 <div className='imgContainer'>
-                    <img src={logo1} alt='logo' />
+                    <img src={process.env.PUBLIC_URL + '/images/logo1.png'} alt='logo' />
                 </div>
                 <h1 className='headerOne'>Приемы</h1>
                 <Logout />

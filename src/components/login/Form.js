@@ -10,7 +10,6 @@ import {
 } from './styles';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-require('dotenv').config();
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: ''});
@@ -19,7 +18,6 @@ const FormComponent = () => {
 
     const history = useHistory();
 
-    const inputPsw = useRef(null);
     const btnSubmit = useRef(null);
 
     const URL = process.env.REACT_APP_URL_LOGIN;
@@ -41,14 +39,11 @@ const FormComponent = () => {
                 password: pswValue
             });
 
-            console.log(`resp`, resp)
             const token = resp.data.token;
             const userId = resp.data.user._id;
-            const username = resp.data.user.username;
 
             localStorage.setItem('token',JSON.stringify(token));
             localStorage.setItem('userId',JSON.stringify(userId));
-            localStorage.setItem('username',JSON.stringify(username));
 
             console.log('pressing login button');
             history.push('/visit');
@@ -68,16 +63,10 @@ const FormComponent = () => {
     const handleChange = (e) => {
         if (errMsg) {
             setErrMsg(null);
-        }
+        };
         setUser({...user, [e.target.name] : e.target.value.trim() });
     }
     // pressing the Enter key
-    const handleKeyPressName = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputPsw.current.focus();
-        }
-    }
     const handleKeyPressPsw = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
@@ -86,7 +75,7 @@ const FormComponent = () => {
     }
 
     const validate = () => {
-        return pswValue && userName.length >= 6 && userName.trim()
+        return pswValue && userName.length >= 6 && userName.trim();
     }
     // redirecting
     const handleClick = () => {
@@ -106,7 +95,6 @@ const FormComponent = () => {
             name='userName'
             placeholder='login'
             onChange={handleChange}
-            onKeyPress={handleKeyPressName}
         />
         <Label htmlFor='psw' >password:</Label>
         <Input
@@ -115,7 +103,6 @@ const FormComponent = () => {
             value={pswValue}
             name='pswValue'
             placeholder='password'
-            ref={inputPsw}
             onChange={handleChange}
             onKeyPress={handleKeyPressPsw}
         />

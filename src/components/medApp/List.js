@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
-// import { AiFillEdit } from 'react-icons/ai';
+import { AiFillEdit } from 'react-icons/ai';
 import DeleteWindow from './DeleteWindow';
 import EditWindow from './EditWindow';
 
@@ -9,8 +9,7 @@ const List = ({doctors, visitsList, setVisitsList}) => {
     const [deleting, setDeleting] = useState(false);
 
     const [editVisit, setEditVisit] = useState({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', _id:'',});
-
-    console.log(`visitsList-from List>>`, visitsList)
+    const [deleteVisit, setDeleteVisit] = useState({});
 
     const handleClickEdit = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
@@ -24,8 +23,21 @@ const List = ({doctors, visitsList, setVisitsList}) => {
             _id: index,
         })
     }
-
+    const handleClickDelete = (index) => {
+        const specificVisit = visitsList.find(visit => visit._id === index);
+        setDeleting(!deleting);
+        setDeleteVisit(specificVisit);
+    }
     return <main className='list'>
+        {visitsList.length !== 0 &&
+            <div className='listTitles'>
+                <p>Имя</p>
+                <p>Врач</p>
+                <p>Дата</p>
+                <p>Жалобы</p>
+                <p></p>
+            </div>
+        }
         {visitsList.map((visit,index) => {
             const {username, doctorId, date, complaints} = visit;
             const visitDate = date.slice(0,10);
@@ -33,16 +45,15 @@ const List = ({doctors, visitsList, setVisitsList}) => {
             const visitId = visit._id;
 
             return <article key={index} className='singleVisit'>
-                {deleting && <DeleteWindow setDeleting={setDeleting} deleting={deleting} visitId = {visitId} visitsList={visitsList} setVisitsList={setVisitsList} />}
-                {editing && <EditWindow {...visit} doctors={doctors} editVisit={editVisit} setEditVisit={setEditVisit} setEditing={setEditing} editing={editing} visitId = {visitId} visitsList={visitsList} setVisitsList={setVisitsList} />}
+                {deleting && <DeleteWindow setDeleting={setDeleting} deleteVisit={deleteVisit} deleting={deleting} visitsList={visitsList} setVisitsList={setVisitsList} />}
+                {editing && <EditWindow doctors={doctors} editVisit={editVisit} setEditVisit={setEditVisit} setEditing={setEditing} editing={editing} visitsList={visitsList} setVisitsList={setVisitsList} />}
                 <p>{username}</p>
                 <p>{doctorId}</p>
                 <p>{visitDate} {visitTime}</p>
                 <p>{complaints}</p>
                 <div className='buttons'>
-                    <button type='button' onClick={() => setDeleting(!deleting)}><MdDeleteOutline /></button>
-                    {/* <button type='button' onClick={() => handleClickEdit(visitId)}><AiFillEdit /></button> */}
-                    <button type='button' onClick={() => handleClickEdit(visitId)}>edit</button>
+                    <button type='button' onClick={() => handleClickDelete(visitId)}><MdDeleteOutline /></button>
+                    <button type='button' onClick={() => handleClickEdit(visitId)}><AiFillEdit /></button>
                 </div>
             </article>
         })}

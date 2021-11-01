@@ -1,16 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import axios from 'axios';
 
 const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visitsList, setVisitsList}) => {
     const {usernameInput, doctorInput, dateInput, timeInput, complaintInput, _id} = editVisit;
 
-    // remove refs and their usage
-    const inputDoctor = useRef(null);
-    const inputDate = useRef(null);
-    const inputTime = useRef(null);
-    const inputComplaint = useRef(null);
     const btnSubmit = useRef(null);
-    const inputName = useRef(null);
 
     const jwt = JSON.parse(localStorage.getItem('token'));
 
@@ -29,68 +23,29 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                     },
                 }
             );
-            const newArr = visitsList.map(item => {
-                    console.log(`item`, item)
-                    console.log(`editVisit`, editVisit)
+            setVisitsList(visitsList.map(item => {
                 if (item._id === editVisit._id) {
-                    console.log('shevida');
                     return {...item, ...response.data}
                 } else return item;
-            })
-            setVisitsList(newArr);
-            console.log(newArr)
-            console.log(`response-edit`, response)
+            }))
         } catch (error) {
             console.log(`error-edit visit>>`, error.response)
         }
     }
 
     // pressing the Enter key
-    const handleKeyPressPatientName = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputDoctor.current.focus();
-        }
-    }
-    const handleKeyPressDoctor = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputDate.current.focus();
-        }
-    }
-    const handleKeyPressDate = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputTime.current.focus();
-        }
-    }
-    const handleKeyPressTime = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputComplaint.current.focus();
-        }
-    }
     const handleKeyPressComplaint = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
             btnSubmit.current.focus();
         }
     }
-    const handleKeyPressBtnSubmit = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputName.current.focus();
-        }
-    }
 
     const handleClickEdit = async () => {
-        console.log('in edit window button edit');
         await editingVisit();
         setEditVisit({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', id:'',});
         setEditing(!editing);
     }
-
-    //  get all visits, and add onkeypress "Enter"
 
     const handleChange = (e) => {
         setEditVisit({...editVisit, [e.target.name]: e.target.value})
@@ -99,7 +54,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
         <div className='editWindow'>
             <div className='edit-content'>
                 <div className='header'>
-                edit прием
+                Изменить прием
                 </div>
                 <div className='main'>
                     <div className='singleField'>
@@ -109,9 +64,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             id='usernameInput'
                             value={usernameInput}
                             name='usernameInput'
-                            ref={inputName}
                             onChange={handleChange}
-                            onKeyPress={handleKeyPressPatientName}
                         />
                     </div>
                     <div className='singleField'>
@@ -119,9 +72,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                         <select
                             value={doctorInput}
                             id='doctorInput'
-                            onKeyPress={handleKeyPressDoctor}
                             name='doctorInput'
-                            ref={inputDoctor}
                             onChange={handleChange}
                         >
                             <option value=''></option>
@@ -138,9 +89,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             type='date'
                             id='dateInput'
                             value={dateInput}
-                            onKeyPress={handleKeyPressDate}
                             name='dateInput'
-                            ref={inputDate}
                             onChange={handleChange}
                             />
                     </div>
@@ -150,9 +99,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             type='time'
                             id='timeInput'
                             value={timeInput}
-                            onKeyPress={handleKeyPressTime}
                             name='timeInput'
-                            ref={inputTime}
                             onChange={handleChange}
                             />
                     </div>
@@ -164,14 +111,17 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             value={complaintInput}
                             onKeyPress={handleKeyPressComplaint}
                             name='complaintInput'
-                            ref={inputComplaint}
                             onChange={handleChange}
                             />
                     </div>
                 </div>
-                <div className='header btns'>
+                <div className='buttons'>
                     <button type='button' onClick={() => setEditing(!editing)}>cancel</button>
-                    <button type='button' onClick={handleClickEdit} ref={btnSubmit} >edit</button>
+                    <button
+                        type='button'
+                        ref={btnSubmit}
+                        onClick={handleClickEdit}
+                    >save</button>
                 </div>
             </div>
         </div>
