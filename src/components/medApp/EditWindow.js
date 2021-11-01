@@ -65,7 +65,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
 
     // checking if all fields are filled
     const validate = () => {
-        return usernameInput.trim() && doctorInput && dateInput && dateInput.slice(0,4) >= year && timeInput && timeInput >= time && complaintInput.trim();
+        return usernameInput.trim() && doctorInput && dateInput && Number(dateInput.slice(0,4)) >= Number(year) && timeInput && time && complaintInput.trim();
     }
 
     return (
