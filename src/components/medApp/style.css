@@ -269,7 +269,7 @@ main.list {
     /* margin: 1rem 0; */
 }
 .sortFieldsContainer .sortField select {
-    width: 100px;
+    width: 200px;
     height: 47px;
     border-radius: 4px;
     font-size: 18px;
@@ -277,9 +277,9 @@ main.list {
     background: #fff;
     padding-left: .5rem;
 }
-.sortFieldsContainer .sortField option {
+.sortFieldsContainer .sortField #sort option {
     background: aqua;
-    width: 100px !important;
+    width: 200px !important;
     font-size: 15px;
     overflow: hidden;
 }

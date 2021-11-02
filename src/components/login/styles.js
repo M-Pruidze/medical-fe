@@ -70,15 +70,7 @@ export const H1 = styled.h1`
         font-size: 30px;
     }
 `
-export const H2 = styled.h1`
-    ${font};
-    padding: 1.5rem 0;
 
-    @media only screen and (max-width: 860px) {
-        text-align: center;
-        font-size: 30px;
-    }
-`
 export const Main = styled.main`
     padding: 2rem 0 5rem;
     width: 100%;
@@ -128,6 +120,16 @@ export const Form = styled.form`
     }
 
 `
+export const H2 = styled.h1`
+    ${font};
+    text-transform: none;
+    text-align: center;
+    padding: 1.5rem 0;
+
+    @media only screen and (max-width: 860px) {
+        font-size: 30px;
+    }
+`
 export const Input = styled.input`
     width: 100%;
     ${border};
@@ -148,6 +150,7 @@ export const Button = styled.button`
     ${border};
     ${box};
     ${font};
+    padding: .5rem 3rem;
 
     :disabled {
         color: #000;
@@ -158,6 +161,7 @@ export const Button = styled.button`
 `
 export const Button_no_border = styled(Button)`
     border: none;
+    padding: .5rem .8rem;
 `
 export const Paragraph = styled.p`
     ${font};

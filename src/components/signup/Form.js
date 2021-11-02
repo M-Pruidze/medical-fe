@@ -9,8 +9,8 @@ import {
     Paragraph
 } from './styles';
 import axios from 'axios';
-import { Redirect, Link, Switch, Route, useHistory } from 'react-router-dom';
-require('dotenv').config();
+import { useHistory } from 'react-router-dom';
+import config from '../../config';
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: '', pswrpValue: ''});
@@ -21,20 +21,23 @@ const FormComponent = () => {
 
     const history = useHistory();
 
-    const inputPsw = useRef(null);
-    const inputPswrp = useRef(null);
     const btnSubmit = useRef(null);
 
-    const URL = process.env.REACT_APP_URL;
+    const URL = config.url_auth;
+
+    useEffect(()=>{
+        const jwt = JSON.parse(localStorage.getItem('token'));
+        jwt && history.push('/visit')
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`user`, user);
-        setUser({userName: '', pswValue: '', pswrpValue: ''});
         await createUser();
+        setUser({userName: '', pswValue: '', pswrpValue: ''});
     }
     const createUser = async () => {
         try {
+            console.log(`URL`, URL)
             const resp = await axios.post(URL, {
                 username: userName,
                 password: pswValue
@@ -65,21 +68,7 @@ const FormComponent = () => {
         setUser({...user, [e.target.name] : e.target.value.trim() });
     }
     // pressing the Enter key
-    const handleKeyPressName = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputPsw.current.focus();
-            console.log('enter press here! ')
-        }
-    }
-    const handleKeyPressPsw = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputPswrp.current.focus();
-            console.log('enter press here! ')
-        }
-    }
-    const handleKeyPressPswrp = (e) => {
+    const handleKeyPressPasswordConfirm = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
             btnSubmit.current.focus();
@@ -92,12 +81,12 @@ const FormComponent = () => {
 
     // password regexes
     // minimum six characters, at least one uppercase letter, one lowercase letter, one number and one special character
-    const regex1 = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
+    const validPasswordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
     // only latin letters
-    const regex2 = /^(?:[\u0000-\u007F]+)$/;
+    const latinLettersRegex = /^(?:[\u0000-\u007F]+)$/;
 
     const validate = () => {
-        return pswValue === pswrpValue && userName.length >= 6 && userName.trim() && regex1.test(pswValue) && regex2.test(pswValue)
+        return pswValue === pswrpValue && userName.length >= 6 && userName.trim() && validPasswordRegex.test(pswValue) && latinLettersRegex.test(pswValue)
     }
     // redirecting
     const handleClick = () => {
@@ -110,7 +99,7 @@ const FormComponent = () => {
         {errMsg && <Paragraph>* {errMsg}</Paragraph>}
         {!correctPsw && <Paragraph>* пароли не совпадают</Paragraph>}
         {userName && userName.length < 6 && <Paragraph>* имя пользователя должно быть не менее 6 символов</Paragraph>}
-        {pswrpValue && pswValue === pswrpValue && (!regex1.test(pswrpValue) || !regex2.test(pswrpValue)) && <Paragraph>* пароль должен содержать латинские символы, минимум шесть символов, одна заглавная буква, одна строчная буква, одна цифра и один специальный символ</Paragraph>}
+        {pswrpValue && pswValue === pswrpValue && (!validPasswordRegex.test(pswrpValue) || !latinLettersRegex.test(pswrpValue)) && <Paragraph>* пароль должен содержать латинские символы, минимум шесть символов, одна заглавная буква, одна строчная буква, одна цифра и один специальный символ</Paragraph>}
         {(!userName || !correctPsw) && (userName || correctPsw) && <Paragraph>* заполните все поля</Paragraph>}
 
         <Label htmlFor='userName' >login:</Label>
@@ -121,7 +110,6 @@ const FormComponent = () => {
             name='userName'
             placeholder='login'
             onChange={handleChange}
-            onKeyPress={handleKeyPressName}
         />
         <Label htmlFor='psw' >password:</Label>
         <Input
@@ -130,9 +118,7 @@ const FormComponent = () => {
             value={pswValue}
             name='pswValue'
             placeholder='password'
-            ref={inputPsw}
             onChange={handleChange}
-            onKeyPress={handleKeyPressPsw}
         />
         <Label htmlFor='pswrp' >repeat password:</Label>
         <Input
@@ -141,9 +127,8 @@ const FormComponent = () => {
             value={pswrpValue}
             name='pswrpValue'
             placeholder='password'
-            ref={inputPswrp}
             onChange={handleChange}
-            onKeyPress={handleKeyPressPswrp}
+            onKeyPress={handleKeyPressPasswordConfirm}
         />
         <Button
             type='submit'
