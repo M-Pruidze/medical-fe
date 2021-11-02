@@ -5,6 +5,7 @@ import './style.css';
 import CreateVisit from './Visit';
 import List from './List';
 import Logout from './Logout';
+import config from '../../config';
 
 const userId = JSON.parse(localStorage.getItem('userId'));
 let jwt;
@@ -24,7 +25,7 @@ const MedApp = () => {
     // get doctors
     const getDoctors = async () => {
         try {
-            const URL = `${process.env.REACT_APP_URL}doctor`;
+            const URL = `${config.url}doctor`;
             const data = await axios.get(URL, {
                 headers:{
                     Authorization: `Bearer ${jwt}`
@@ -42,7 +43,7 @@ const MedApp = () => {
         try {
             const jwt = JSON.parse(localStorage.getItem('token'));
 
-            const URL = `${process.env.REACT_APP_URL}visit`;
+            const URL = `${config.url}visit`;
             const response = await axios.get(URL, {
                 headers: {
                     Authorization: `Bearer ${jwt}`

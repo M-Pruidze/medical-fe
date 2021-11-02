@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import config from '../../config';
 
 const Visit = ({doctors, setVisitsList, visitsList}) => {
     const userId = JSON.parse(localStorage.getItem('userId'));
@@ -16,7 +17,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     // add a visit
     const addVisit = async () => {
         try {
-                const URL = `${process.env.REACT_APP_URL}visit`;
+                const URL = `${config.url}visit`;
                 const response = await axios.post(URL, {
                         username: patientName,
                         doctorId: doctor,
@@ -48,7 +49,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
         }
     }
 
-    // date variables
+    // date constiables
     const dob = new Date();
     const month = dob.getMonth();
     const day   = dob.getDay() <= 9 ? `0${dob.getDay()}` : dob.getDay();
@@ -59,9 +60,14 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
     const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
     const currentTime = `${hours}:${minutes}`;
 
+    let givenDate = date;
+    const currentDate = dob;
+    givenDate = new Date(givenDate);
+    const maxDate = new Date(`${year + 1}-${month + 1}-${day}`);
+
     // checking if all fields are valid
     const validate = () => {
-        return patientName.trim() && doctor && date && date.slice(0,4) >= year && date.slice(5,7) >= month+1 && date.slice(8,10) >= day && date.slice(0,4) <= year+1 && time && time >= currentTime && complaint.trim();
+        return patientName.trim() && doctor && date && givenDate > currentDate && givenDate < maxDate && time && complaint.trim();
     }
 
     return (

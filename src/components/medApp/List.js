@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
 import DeleteWindow from './DeleteWindow';
@@ -14,6 +14,7 @@ const List = ({doctors, visitsList, setVisitsList}) => {
     const [sort, setSort] = useState({});
     const [isSorting, setIsSorting] = useState(false);
     const [sortField, setSortField] = useState('');
+    const [sortDirection, setSortDirection] = useState('');
 
     const handleClickEdit = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
@@ -34,10 +35,16 @@ const List = ({doctors, visitsList, setVisitsList}) => {
     };
     const handleChangeSortField = (e) => {
         setSortField(e.target.value);
-        if (sortField) setIsSorting(true);
-    }
-    console.log(`sortField`, sortField);
+    };
 
+    useEffect(() => {
+        if (sortField == 'Имя' || sortField == 'Врач' || sortField == 'Дата') setIsSorting(true);
+        else setIsSorting(false);
+    }, [sortField]);
+
+    const handleChangeSortDirection = (e) => {
+        setSortDirection(e.target.value);
+    }
     return <main className='list'>
         {visitsList.length !== 0 &&
             <div className='sortFieldsContainer'>
@@ -50,24 +57,24 @@ const List = ({doctors, visitsList, setVisitsList}) => {
                                 onChange={handleChangeSortField}
                             >
                                 <option value=''></option>
-                                <option value='nameOption'>Имя</option>
-                                <option value='doctorOption'>Врач</option>
-                                <option value='dateOption'>Дата</option>
-                                <option value='noOption'>None</option>
+                                <option name='nameOption' value='Имя'>Имя</option>
+                                <option name='doctorOption' value='Врач'>Врач</option>
+                                <option name='dateOption' value='Дата'>Дата</option>
+                                <option name='noOption' value='None'>None</option>
                             </select>
                 </div>
                 {isSorting &&
                     <div className='sortField'>
                                 <label htmlFor='sort'>Направление:</label>
                                 <select
-                                    value={sortField}
+                                    value={sortDirection}
                                     id='sort'
                                     name='sort'
-                                    // onChange={handleChangeSortField}
+                                    onChange={handleChangeSortDirection}
                                 >
                                     <option value=''></option>
-                                    <option value='ascending'>По возрастанию</option>
-                                    <option value='descending'>По убыванию</option>
+                                    <option name='ascending' value='По возрастанию'>По возрастанию</option>
+                                    <option name='descending' value='По убыванию'>По убыванию</option>
                                 </select>
                     </div>
                 }

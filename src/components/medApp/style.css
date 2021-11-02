@@ -258,7 +258,7 @@ main.list {
     width: 100%;
     /* background: red; */
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin: 0 0 2.5rem;
 }
 .sortFieldsContainer .sortField {
@@ -268,11 +268,20 @@ main.list {
     /* width: 15%; */
     /* margin: 1rem 0; */
 }
-.sortFieldsContainer .sortField select, .sortFieldsContainer .sortField option {
+.sortFieldsContainer .sortField select {
     width: 200px;
     height: 47px;
     border-radius: 4px;
+    font-size: 18px;
     border: 1px solid rgba(0, 0, 0, 0.2);
+    background: #fff;
+    padding-left: .5rem;
+}
+.sortFieldsContainer .sortField #sort option {
+    background: aqua;
+    width: 200px !important;
+    font-size: 15px;
+    overflow: hidden;
 }
 .sortFieldsContainer .sortField label {
     padding: 1rem;

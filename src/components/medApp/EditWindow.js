@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import axios from 'axios';
+import config from '../../config';
 
 const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visitsList, setVisitsList}) => {
     const {usernameInput, doctorInput, dateInput, timeInput, complaintInput, _id} = editVisit;
@@ -11,7 +12,7 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
     // edit a visit
     const editingVisit = async () => {
         try {
-            const URL = `${process.env.REACT_APP_URL}visit/${_id}`;
+            const URL = `${config.url}visit/${_id}`;
             const response = await axios.put(URL, {
                     username: usernameInput,
                     doctorId: doctorInput,
@@ -62,9 +63,14 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
     const minutes = dob.getMinutes() <= 9 ? `0${dob.getMinutes()}` : dob.getMinutes();
     const time = `${hours}:${minutes}`;
 
-    // checking if all fields are filled
+    let givenDate = dateInput;
+    const currentDate = dob;
+    givenDate = new Date(givenDate);
+    const maxDate = new Date(`${year + 1}-${month + 1}-${day}`);
+
+    // checking if all fields are valid
     const validate = () => {
-        return usernameInput.trim() && doctorInput && dateInput && Number(dateInput.slice(0,4)) >= Number(year) && dateInput.slice(5,7) >= month+1 && dateInput.slice(8,10) >= day && Number(dateInput.slice(0,4)) <= Number(year+1) && timeInput && complaintInput.trim();
+        return usernameInput.trim() && doctorInput && dateInput && givenDate > currentDate && givenDate < maxDate && timeInput && complaintInput.trim();
     }
 
     return (

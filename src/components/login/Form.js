@@ -10,6 +10,7 @@ import {
 } from './styles';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import config from '../../config';
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: ''});
@@ -20,7 +21,7 @@ const FormComponent = () => {
 
     const btnSubmit = useRef(null);
 
-    const URL = process.env.REACT_APP_URL_LOGIN;
+    const URL = config.url_login;
 
     useEffect(()=>{
         const jwt = JSON.parse(localStorage.getItem('token'));

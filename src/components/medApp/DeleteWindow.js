@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React from 'react'
+import React from 'react';
+import config from '../../config';
 
 const DeleteWindow = ({deleteVisit, deleting, setDeleting, visitsList, setVisitsList}) => {
     const {_id} = deleteVisit;
     const handleClickDelete = async (index) => {
         const jwt = JSON.parse(localStorage.getItem('token'));
-        const URL = `${process.env.REACT_APP_URL}visit/${index}`;
+        const URL = `${config.url}visit/${index}`;
         await axios.delete(URL,{
             headers: {Authorization: `Bearer ${jwt}`},
         });
