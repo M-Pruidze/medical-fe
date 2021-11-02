@@ -117,7 +117,6 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                         value={time}
                         id='time'
                         name='time'
-                        min={currentTime}
                         onChange={handleChange}
                     />
                 </div>

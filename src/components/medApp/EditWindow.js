@@ -125,7 +125,6 @@ const EditWindow = ({doctors, editVisit, setEditVisit, editing, setEditing, visi
                             id='timeInput'
                             value={timeInput}
                             name='timeInput'
-                            min={time}
                             onChange={handleChange}
 
                             />
