@@ -3,6 +3,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
 import DeleteWindow from './DeleteWindow';
 import EditWindow from './EditWindow';
+import SortComponent from './SortComponent';
 
 const List = ({doctors, visitsList, setVisitsList}) => {
     const [editing, setEditing] = useState(false);
@@ -10,11 +11,6 @@ const List = ({doctors, visitsList, setVisitsList}) => {
 
     const [editVisit, setEditVisit] = useState({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', _id:'',});
     const [deleteVisit, setDeleteVisit] = useState({});
-
-    const [sort, setSort] = useState({});
-    const [isSorting, setIsSorting] = useState(false);
-    const [sortField, setSortField] = useState('');
-    const [sortDirection, setSortDirection] = useState('');
 
     const handleClickEdit = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
@@ -33,53 +29,9 @@ const List = ({doctors, visitsList, setVisitsList}) => {
         setDeleting(!deleting);
         setDeleteVisit(specificVisit);
     };
-    const handleChangeSortField = (e) => {
-        setSortField(e.target.value);
-    };
 
-    useEffect(() => {
-        if (sortField == 'Имя' || sortField == 'Врач' || sortField == 'Дата') setIsSorting(true);
-        else setIsSorting(false);
-    }, [sortField]);
-
-    const handleChangeSortDirection = (e) => {
-        setSortDirection(e.target.value);
-    }
     return <main className='list'>
-        {visitsList.length !== 0 &&
-            <div className='sortFieldsContainer'>
-                    <div className='sortField'>
-                            <label htmlFor='sort'>Сортировать по:</label>
-                            <select
-                                value={sortField}
-                                id='sort'
-                                name='sort'
-                                onChange={handleChangeSortField}
-                            >
-                                <option value=''></option>
-                                <option name='nameOption' value='Имя'>Имя</option>
-                                <option name='doctorOption' value='Врач'>Врач</option>
-                                <option name='dateOption' value='Дата'>Дата</option>
-                                <option name='noOption' value='None'>None</option>
-                            </select>
-                </div>
-                {isSorting &&
-                    <div className='sortField'>
-                                <label htmlFor='sort'>Направление:</label>
-                                <select
-                                    value={sortDirection}
-                                    id='sort'
-                                    name='sort'
-                                    onChange={handleChangeSortDirection}
-                                >
-                                    <option value=''></option>
-                                    <option name='ascending' value='По возрастанию'>По возрастанию</option>
-                                    <option name='descending' value='По убыванию'>По убыванию</option>
-                                </select>
-                    </div>
-                }
-            </div>
-        }
+        {visitsList.length !== 0 && <SortComponent visitsList={visitsList} setVisitsList={setVisitsList} />}
 
         {visitsList.length !== 0 &&
             <div className='listTitles'>
