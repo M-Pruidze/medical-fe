@@ -279,8 +279,15 @@ main.list {
 }
 .sortFieldsContainer .sortField #sort option {
     width: 200px !important;
-    font-size: 15px;
+    font-size: 18px;
     overflow: hidden;
+    padding: .5rem 0 !important;
+}
+select:hover {
+    cursor: pointer;
+}
+select option:hover {
+    cursor: pointer !important;
 }
 .sortFieldsContainer .sortField label {
     padding: 1rem;
@@ -295,6 +302,9 @@ main.list {
     }
     .singleField {
         width: 100%;
+    }
+    .sortFieldsContainer {
+        flex-direction: column;
     }
 }
 @media only screen and (max-width: 660px) {
