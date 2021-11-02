@@ -1,33 +1,71 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
-require('dotenv').config();
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import './style.css';
+import CreateVisit from './Visit';
+import List from './List';
+import Logout from './Logout';
+import config from '../../config';
 
 const userId = JSON.parse(localStorage.getItem('userId'));
-const jwt = JSON.parse(localStorage.getItem('token'));
+let jwt;
 
 const MedApp = () => {
-    const checkUser = async () => {
+    const [doctors, setDoctors] = useState([]);
+    const [visitsList, setVisitsList] = useState([]);
+    const history = useHistory();
+
+    useEffect(async () => {
+        jwt = JSON.parse(localStorage.getItem('token'));
+        !jwt && history.push('/login');
+        await getDoctors();
+        await getVisits();
+    }, []);
+
+    // get doctors
+    const getDoctors = async () => {
         try {
-            console.log(`userId`, userId)
-            console.log(`process.env.REACT_APP_URL`, process.env.REACT_APP_URL)
-            const URL = `${process.env.REACT_APP_URL}user/${userId}/profile`;
-            const resp = await axios.get(URL,{
+            const URL = `${config.url}doctor`;
+            const data = await axios.get(URL, {
                 headers:{
                     Authorization: `Bearer ${jwt}`
                 }
-            }
-            );
-            console.log(`resp`, resp)
+            });
+
+            setDoctors([...data.data]);
         } catch (error) {
-            console.log(`error login`, error)
+            console.log(`error.response`, error.response)
         }
-    };
-    useEffect(() => {
-        checkUser();
-    }, [])
+    }
+
+    // get visits
+    const getVisits = async () => {
+        try {
+            const jwt = JSON.parse(localStorage.getItem('token'));
+
+            const URL = `${config.url}visit`;
+            const response = await axios.get(URL, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            });
+            setVisitsList(response.data);
+        } catch (error) {
+            console.log(`error.response`, error.response)
+        }
+    }
+
     return (
-        <div>
-            med app
+        <div className='container'>
+            <header>
+                <div className='imgContainer'>
+                    <img src={process.env.PUBLIC_URL + '/images/logo1.png'} alt='logo' />
+                </div>
+                <h1 className='headerOne'>Приемы</h1>
+                <Logout />
+            </header>
+            <CreateVisit doctors={doctors}  setVisitsList={setVisitsList} visitsList={visitsList} />
+            <List doctors={doctors} visitsList={visitsList} setVisitsList={setVisitsList} />
         </div>
     )
 }

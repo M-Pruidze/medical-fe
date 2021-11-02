@@ -123,8 +123,10 @@ export const Form = styled.form`
 export const H2 = styled.h1`
     ${font};
     text-transform: none;
+    text-align: center;
+    padding: 1.5rem 0;
+
     @media only screen and (max-width: 860px) {
-        text-align: center;
         font-size: 30px;
     }
 `

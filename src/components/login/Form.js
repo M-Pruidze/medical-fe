@@ -10,7 +10,7 @@ import {
 } from './styles';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-require('dotenv').config();
+import config from '../../config';
 
 const FormComponent = () => {
     const [user, setUser] = useState({userName: '', pswValue: ''});
@@ -19,34 +19,35 @@ const FormComponent = () => {
 
     const history = useHistory();
 
-    const inputPsw = useRef(null);
     const btnSubmit = useRef(null);
 
-    const URL = process.env.REACT_APP_URL_LOGIN;
+    const URL = config.url_login;
+
+    useEffect(()=>{
+        const jwt = JSON.parse(localStorage.getItem('token'));
+        jwt && history.push('/visit')
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(`user`, user);
         setUser({userName: '', pswValue: ''});
         await loginUser();
     }
     const loginUser = async () => {
         try {
-            const resp = await axios.post(URL, {
+            const resp = await axios.post('http://localhost:4000/auth/login', {
                 username: userName,
                 password: pswValue
             });
 
-            console.log(`resp`, resp)
             const token = resp.data.token;
             const userId = resp.data.user._id;
-            const username = resp.data.user.username;
 
             localStorage.setItem('token',JSON.stringify(token));
             localStorage.setItem('userId',JSON.stringify(userId));
-            localStorage.setItem('username',JSON.stringify(username));
-            history.push(`/visit`);
 
+            console.log('pressing login button');
+            history.push('/visit');
         } catch (error) {
             if (error.response) {
                 // Request made and server responded
@@ -63,16 +64,10 @@ const FormComponent = () => {
     const handleChange = (e) => {
         if (errMsg) {
             setErrMsg(null);
-        }
+        };
         setUser({...user, [e.target.name] : e.target.value.trim() });
     }
     // pressing the Enter key
-    const handleKeyPressName = (e) => {
-        if(e.code === 'Enter'){
-            e.preventDefault();
-            inputPsw.current.focus();
-        }
-    }
     const handleKeyPressPsw = (e) => {
         if(e.code === 'Enter'){
             e.preventDefault();
@@ -81,7 +76,7 @@ const FormComponent = () => {
     }
 
     const validate = () => {
-        return pswValue && userName.length >= 6 && userName.trim()
+        return pswValue && userName.length >= 6 && userName.trim();
     }
     // redirecting
     const handleClick = () => {
@@ -101,7 +96,6 @@ const FormComponent = () => {
             name='userName'
             placeholder='login'
             onChange={handleChange}
-            onKeyPress={handleKeyPressName}
         />
         <Label htmlFor='psw' >password:</Label>
         <Input
@@ -110,7 +104,6 @@ const FormComponent = () => {
             value={pswValue}
             name='pswValue'
             placeholder='password'
-            ref={inputPsw}
             onChange={handleChange}
             onKeyPress={handleKeyPressPsw}
         />
