@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-const SortComponent = ({visitsList, setVisitsList}) => {
-    const [sort, setSort] = useState({});
-    const [isSorting, setIsSorting] = useState(false);
-    const [sortField, setSortField] = useState('');
-    const [sortDirection, setSortDirection] = useState(undefined);
+const SortComponent = ({isSorting, setIsSorting, sortField, setSortField, visitsList, setVisitsList}) => {
+    // const [sortField, setSortField] = useState('');
+    const [sortDirection, setSortDirection] = useState('');
 
     const [initialList, setInitialList] = useState(visitsList);
     const [sortType, setSortType] = useState('');

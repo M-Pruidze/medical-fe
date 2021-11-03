@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import { AiFillEdit } from 'react-icons/ai';
+import { BsFillPlusSquareFill } from 'react-icons/bs';
 import DeleteWindow from './DeleteWindow';
 import EditWindow from './EditWindow';
 import SortComponent from './SortComponent';
+import FilterComponent from './FilterComponent';
 
 const List = ({doctors, visitsList, setVisitsList}) => {
     const [editing, setEditing] = useState(false);
@@ -11,6 +13,11 @@ const List = ({doctors, visitsList, setVisitsList}) => {
 
     const [editVisit, setEditVisit] = useState({usernameInput:'', doctorInput: '', dateInput:'', timeInput:'', complaintInput: '', _id:'',});
     const [deleteVisit, setDeleteVisit] = useState({});
+
+    const [isSorting, setIsSorting] = useState(false);
+    const [sortField, setSortField] = useState('');
+
+    const [isFilterBtnClicked, setIsFilterBtnClicked] = useState(false);
 
     const handleClickEdit = (index) => {
         const specificVisit = visitsList.find(visit => visit._id === index);
@@ -29,9 +36,45 @@ const List = ({doctors, visitsList, setVisitsList}) => {
         setDeleting(!deleting);
         setDeleteVisit(specificVisit);
     };
+    const handleClickFilterBtn = () => {
+        setIsSorting(false);
+        setSortField('noOption');
+        setIsFilterBtnClicked(true);
+    }
 
     return <main className='list'>
-        {visitsList.length !== 0 && <SortComponent visitsList={visitsList} setVisitsList={setVisitsList} />}
+        {visitsList.length !== 0 &&
+        <>
+            <div className='sort_filter'>
+                <SortComponent
+                    isSorting={isSorting}
+                    setIsSorting={setIsSorting}
+                    sortField={sortField}
+                    setSortField={setSortField}
+                    visitsList={visitsList}
+                    setVisitsList={setVisitsList}
+                />
+                { !isFilterBtnClicked &&
+                <div className='filterContainer'>
+                    <label>Добавить фильтр по дате:</label>
+                    <button
+                        type='button'
+                        className='addBtn'
+                        onClick={handleClickFilterBtn}
+                    >
+                        <BsFillPlusSquareFill />
+                    </button>
+                </div>
+                }
+            </div>
+            { isFilterBtnClicked &&
+            <FilterComponent
+                setIsFilterBtnClicked={setIsFilterBtnClicked}
+                visitsList={visitsList}
+                setVisitsList={setVisitsList}
+            />}
+        </>
+        }
 
         {visitsList.length !== 0 &&
             <div className='listTitles'>

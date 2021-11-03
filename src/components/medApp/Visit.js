@@ -111,7 +111,7 @@ const Visit = ({doctors, setVisitsList, visitsList}) => {
                     />
                 </div>
                 <div className='singleField'>
-                    <label htmlFor='time'>время:</label>
+                    <label htmlFor='time'>Время:</label>
                     <input
                         type='time'
                         value={time}
