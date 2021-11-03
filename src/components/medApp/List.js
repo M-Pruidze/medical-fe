@@ -37,8 +37,8 @@ const List = ({doctors, visitsList, setVisitsList}) => {
         setDeleteVisit(specificVisit);
     };
     const handleClickFilterBtn = () => {
-        setIsSorting(false);
-        setSortField('noOption');
+        // setIsSorting(false);
+        // setSortField('noOption');
         setIsFilterBtnClicked(true);
     }
 

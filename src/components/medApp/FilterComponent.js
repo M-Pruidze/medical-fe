@@ -1,20 +1,42 @@
 import React, { useState } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
+import axios from 'axios';
+import config from '../../config';
 
 const FilterComponent = ({setIsFilterBtnClicked, visitsList, setVisitsList}) => {
     const [dates, setDates] = useState({fromDate: '', toDate: ''});
     const { fromDate, toDate} = dates;
 
+    const [initialList, setInitialList] = useState(visitsList);
+
     const handleDateChange = (e) => {
         setDates({...dates, [e.target.name]: e.target.value});
+    }
+    // get visits
+    const getVisits = async () => {
+        try {
+            const jwt = JSON.parse(localStorage.getItem('token'));
+            const URL = `${config.url}visit?fromDate=${fromDate}&toDate=${toDate}`;
+            const response = await axios.get(URL, {
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            });
+            setVisitsList(response.data);
+        } catch (error) {
+            console.log(`error.response`, error.response)
+        }
     }
 
     const handleClickFilter = async (e) => {
         e.preventDefault();
         console.log(`dates filter click`, dates);
-        // await requests
-        // setVisitsList(resp.data)
+        if (!fromDate && !toDate) setVisitsList(initialList);
+        else await getVisits();
         setDates({fromDate: '', toDate: ''});
+    }
+    const handleClickClearFilter = (e) => {
+        console.log('hi');
     }
 
     return <>
@@ -45,9 +67,12 @@ const FilterComponent = ({setIsFilterBtnClicked, visitsList, setVisitsList}) => 
                 onClick={handleClickFilter}
             >Фильтровать</button>
             <button
-                type='button'
+                type='submit'
                 className='clearBtn'
-                onClick={() => setIsFilterBtnClicked(false)}
+                onClick={() => {
+                    setIsFilterBtnClicked(false);
+                    setVisitsList(initialList);
+                }}
             ><MdDeleteOutline /></button>
         </div>
     </>

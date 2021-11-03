@@ -63,7 +63,7 @@ const SortComponent = ({isSorting, setIsSorting, sortField, setSortField, visits
                     name='sort'
                     onChange={handleChangeSortField}
                 >
-                    <option value=''></option>
+                    {!sortField && <option value=''></option>}
                     <option value='nameOption' >Имя</option>
                     <option value='doctorOption' >Врач</option>
                     <option value='dateOption' >Дата</option>
@@ -79,7 +79,7 @@ const SortComponent = ({isSorting, setIsSorting, sortField, setSortField, visits
                         name='sort'
                         onChange={handleChangeSortDirection}
                     >
-                        <option value=''></option>
+                        {!sortDirection && <option value=''></option>}
                         <option value='ascending' >По возрастанию</option>
                         <option value='descending' >По убыванию</option>
                     </select>
