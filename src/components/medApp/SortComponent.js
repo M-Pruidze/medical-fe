@@ -4,7 +4,7 @@ const SortComponent = ({visitsList, setVisitsList}) => {
     const [sort, setSort] = useState({});
     const [isSorting, setIsSorting] = useState(false);
     const [sortField, setSortField] = useState('');
-    const [sortDirection, setSortDirection] = useState(undefined);
+    const [sortDirection, setSortDirection] = useState('');
 
     const [initialList, setInitialList] = useState(visitsList);
     const [sortType, setSortType] = useState('');
@@ -21,7 +21,7 @@ const SortComponent = ({visitsList, setVisitsList}) => {
 
     const handleChangeSortDirection = (e) => {
         setSortDirection(e.target.value);
-    }
+    };
 
     useEffect(() => {
         const sortArray = type => {
