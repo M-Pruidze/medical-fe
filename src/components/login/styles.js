@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 const font = css`
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    text-transform: capitalize;
+    // text-transform: capitalize;
 `
 const box = css`
     box-sizing: border-box;
