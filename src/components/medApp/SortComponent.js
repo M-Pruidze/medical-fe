@@ -19,7 +19,7 @@ const SortComponent = ({isSorting, setIsSorting, sortField, setSortField, visits
 
     const handleChangeSortDirection = (e) => {
         setSortDirection(e.target.value);
-    }
+    };
 
     useEffect(() => {
         const sortArray = type => {
