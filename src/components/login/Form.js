@@ -30,8 +30,8 @@ const FormComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser({userName: '', pswValue: ''});
         await loginUser();
+        setUser({userName: '', pswValue: ''});
     }
     const loginUser = async () => {
         try {
