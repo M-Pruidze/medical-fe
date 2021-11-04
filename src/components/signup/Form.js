@@ -37,7 +37,6 @@ const FormComponent = () => {
     }
     const createUser = async () => {
         try {
-            console.log(`URL`, URL)
             const resp = await axios.post(URL, {
                 username: userName,
                 password: pswValue

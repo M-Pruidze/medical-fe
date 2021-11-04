@@ -35,7 +35,7 @@ const FormComponent = () => {
     }
     const loginUser = async () => {
         try {
-            const resp = await axios.post('http://localhost:4000/auth/login', {
+            const resp = await axios.post(URL, {
                 username: userName,
                 password: pswValue
             });
