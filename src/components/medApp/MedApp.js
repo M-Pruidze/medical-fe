@@ -43,7 +43,7 @@ const MedApp = () => {
         try {
             const jwt = JSON.parse(localStorage.getItem('token'));
 
-            const URL = `${config.url}visit`;
+            const URL = `${config.url}visit?fromDate=&toDate=`;
             const response = await axios.get(URL, {
                 headers: {
                     Authorization: `Bearer ${jwt}`

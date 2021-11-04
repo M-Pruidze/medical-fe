@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const SortComponent = ({visitsList, setVisitsList}) => {
-    const [sort, setSort] = useState({});
-    const [isSorting, setIsSorting] = useState(false);
-    const [sortField, setSortField] = useState('');
+const SortComponent = ({isSorting, setIsSorting, sortField, setSortField, visitsList, setVisitsList}) => {
+    // const [sortField, setSortField] = useState('');
     const [sortDirection, setSortDirection] = useState('');
 
     const [initialList, setInitialList] = useState(visitsList);
@@ -65,7 +63,7 @@ const SortComponent = ({visitsList, setVisitsList}) => {
                     name='sort'
                     onChange={handleChangeSortField}
                 >
-                    <option value=''></option>
+                    {!sortField && <option value=''></option>}
                     <option value='nameOption' >Имя</option>
                     <option value='doctorOption' >Врач</option>
                     <option value='dateOption' >Дата</option>
@@ -81,7 +79,7 @@ const SortComponent = ({visitsList, setVisitsList}) => {
                         name='sort'
                         onChange={handleChangeSortDirection}
                     >
-                        <option value=''></option>
+                        {!sortDirection && <option value=''></option>}
                         <option value='ascending' >По возрастанию</option>
                         <option value='descending' >По убыванию</option>
                     </select>
