@@ -87,7 +87,7 @@ header button {
     display: flex;
     flex-direction: column;
     max-width: 188px;
-    width: 15%;
+    /* width: 15%; */
     margin:1rem 0;
 }
 .singleField label {
