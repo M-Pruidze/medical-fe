@@ -24,19 +24,15 @@ const FilterComponent = ({setIsFilterBtnClicked, visitsList, setVisitsList}) => 
             });
             setVisitsList(response.data);
         } catch (error) {
-            console.log(`error.response`, error.response)
+            console.log(`error.response`, error.response);
         }
     }
 
     const handleClickFilter = async (e) => {
         e.preventDefault();
-        console.log(`dates filter click`, dates);
         if (!fromDate && !toDate) setVisitsList(initialList);
         else await getVisits();
         setDates({fromDate: '', toDate: ''});
-    }
-    const handleClickClearFilter = (e) => {
-        console.log('hi');
     }
 
     return <>
